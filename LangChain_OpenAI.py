@@ -1,6 +1,6 @@
 import json
 import re
-from openai import OpenAI
+from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 from typing import Optional, List, Any, Dict
 import os
@@ -16,39 +16,38 @@ class AnalysisResult(BaseModel):
 class OpenAIQASystem:
     def __init__(self, api_key: Optional[str] = None, model_name: str = "gpt-3.5-turbo"):
         """
-        Initialize the QA system with OpenAI
+        Initialize the QA system with ChatOpenAI
         
         Args:
             api_key: OpenAI API key (optional, can use OPENAI_API_KEY env var)
             model_name: OpenAI model to use (default: gpt-3.5-turbo)
         """
-        if api_key:
-            self.client = OpenAI(api_key=api_key)
-        else:
-            self.client = OpenAI()  # Uses OPENAI_API_KEY env var
+        # Use ChatOpenAI with your specific configuration
+        self.llm = ChatOpenAI(
+            model=model_name,
+            temperature=0,
+            max_tokens=1024,
+            timeout=60.0,
+            api_key=api_key or os.getenv("OPENAI_API_KEY"),
+            base_url='https://genai-api-visa.com/v1'
+        )
         
         self.model_name = model_name
-        self.temperature = 0.0
-        self.max_tokens = 1000
 
     def _call_openai(self, prompt: str, system_message: str = None) -> str:
-        """Make a call to OpenAI API"""
+        """Make a call to ChatOpenAI"""
         try:
+            from langchain_core.messages import HumanMessage, SystemMessage
+            
             messages = []
             if system_message:
-                messages.append({"role": "system", "content": system_message})
-            messages.append({"role": "user", "content": prompt})
+                messages.append(SystemMessage(content=system_message))
+            messages.append(HumanMessage(content=prompt))
             
-            response = self.client.chat.completions.create(
-                model=self.model_name,
-                messages=messages,
-                temperature=self.temperature,
-                max_tokens=self.max_tokens,
-                top_p=1,
-            )
-            return response.choices[0].message.content
+            response = self.llm.invoke(messages)
+            return response.content
         except Exception as e:
-            return f"Error calling OpenAI API: {str(e)}"
+            return f"Error calling ChatOpenAI: {str(e)}"
 
     def analyze_intent(self, question: str) -> str:
         """Analyze the intent of the question"""
@@ -373,7 +372,7 @@ def run_test_cases():
 
 # Main interactive function
 def main():
-    print("🤖 Context-Aware Q&A System (Pure OpenAI)")
+    print("🤖 Context-Aware Q&A System (ChatOpenAI)")
     print("=" * 50)
     
     # Check for API key
