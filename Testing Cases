@@ -1,0 +1,107 @@
+Direct Answer Questions (Should provide clear answers)
+Test Case 1: Specific Project Timeline
+
+Question: "When will the Phoenix project be completed?"
+Context: "The Phoenix project started in January 2024 and is scheduled for completion by June 2024. The team has made good progress so far."
+
+Test Case 2: Named Budget Query
+
+Question: "What is the budget for Project Mercury?"
+Context: "Project Mercury has been allocated $2.5 million. Project Venus received $1.8 million, and Project Mars got $3.2 million for this fiscal year."
+
+Test Case 3: Specific Team Information
+
+Question: "Who is the lead developer on the Authentication Service?"
+Context: "Sarah Johnson leads the Authentication Service development. Mike Chen handles the Payment Gateway, and Lisa Wang manages the User Dashboard project."
+
+Ambiguous Questions (Should ask for clarification)
+Test Case 4: Vague Project Reference
+
+Question: "What's the status of the main project?"
+Context: "The e-commerce platform is 75% complete. The mobile app development is at 60%. The API integration project is 90% done."
+
+Test Case 5: Descriptive Without Specifics
+
+Question: "When will the important system be deployed?"
+Context: "The payment system goes live next Tuesday. The security system deploys on Friday. The analytics system launches next month."
+
+Test Case 6: Multiple Entities
+
+Question: "How much did the database cost?"
+Context: "The MySQL database setup cost $15,000. The MongoDB implementation was $22,000. The Redis cache solution cost $8,000."
+
+Test Case 7: Subjective Terms
+
+Question: "What's the priority level of the critical feature?"
+Context: "User authentication has high priority. Payment processing is marked as critical. Search functionality is medium priority."
+
+Edge Cases
+Test Case 8: Missing Information
+
+Question: "What is the release date for Project Alpha?"
+Context: "Project Alpha is being developed by the backend team. The frontend team is working on the user interface improvements."
+
+Test Case 9: Contradictory Information
+
+Question: "When does the system go live?"
+Context: "The development team says the system will be ready by March 15th. However, the QA team estimates testing won't be complete until March 30th."
+
+Test Case 10: Partial Information
+
+Question: "What is John's role in Project Beta?"
+Context: "Project Beta team includes Sarah as project manager, Mike as lead developer, and Lisa as QA lead. The project focuses on mobile development."
+
+Complex Scenarios
+Test Case 11: Multiple Projects, Specific Query
+
+Question: "What technology stack is being used for the inventory management system?"
+Context: "The inventory management system uses React and Node.js. The customer service portal is built with Angular and Python. The reporting dashboard uses Vue.js and Java."
+
+Test Case 12: Time-sensitive Query
+
+Question: "Which project has the earliest deadline?"
+Context: "Project Thunder is due March 1st. Project Lightning has a March 15th deadline. Project Storm must be completed by February 28th."
+
+Test Case 13: Resource Allocation
+
+Question: "How many developers are working on the big project?"
+Context: "The CRM system has 8 developers. The ERP implementation has 12 developers. The website redesign has 5 developers."
+
+Follow-up Scenarios (Test the clarification flow)
+Test Case 14: Initial Ambiguous, Then Specific
+
+Question 1: "What's the budget for the project?"
+Context: "Project X costs $500K. Project Y costs $750K. Project Z costs $1M."
+Follow-up: "I meant Project Y specifically."
+
+Test Case 15: System Reference
+
+Question 1: "When will the system be upgraded?"
+Context: "The email system upgrade is scheduled for next week. The database system will be upgraded next month."
+Follow-up: "The email system."
+
+Real-world Business Scenarios
+Test Case 16: Meeting Information
+
+Question: "What time is the important meeting tomorrow?"
+Context: "The design review is at 10 AM. The budget planning meeting is at 2 PM. The sprint retrospective is at 4 PM."
+
+Test Case 17: Performance Metrics
+
+Question: "What's the performance of our best-performing feature?"
+Context: "User login has 99.9% uptime. Search functionality processes 1000 queries/second. Payment processing has 0.1% failure rate."
+
+Test Case 18: Vendor Information
+
+Question: "Which vendor are we using for cloud services?"
+Context: "We use AWS for our main infrastructure. Azure hosts our backup systems. Google Cloud handles our analytics pipeline."
+
+Testing Tips:
+
+Start with Test Cases 1-3 to verify basic functionality
+Test Cases 4-7 should trigger clarification requests
+Use Cases 8-10 test error handling and partial information
+Cases 14-15 test the interactive clarification flow
+Mix and match contexts and questions to create your own scenarios
+
+Try these with your system and observe whether it correctly identifies ambiguous vs. clear questions!
