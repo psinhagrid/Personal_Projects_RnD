@@ -1,0 +1,31 @@
+In a Retrieval-Augmented Generation (RAG) pipeline, where to place the “intent” or “clarification” agent has a huge impact on performance:
+1. Pre-retrieval intent agent (using summaries/glossaries)
+Pros:
+Could normalize vague user input into a structured query.
+Useful if queries are often imprecise (“What’s the revenue?” → “What’s the revenue of Nvidia in Q2 2024?”).
+Cons:
+Summaries/glossaries are a very narrow view of your corpus.
+You’re right: the agent can overfit to glossary terms and strip away important detail.
+It risks degrading retrieval recall (i.e., the actual relevant chunks never get retrieved because query was “normalized” too aggressively).
+This usually hurts unless your domain has very repetitive queries and well-defined glossary mappings.
+2. Post-retrieval clarification agent (using retrieved candidates)
+Pros:
+Works with actual candidate answers from the full corpus.
+Can detect:
+Conflicts (two retrieved docs say different things).
+Ambiguity (retrieved docs don’t really answer the query).
+Need for disambiguation (“X” could mean product code or department name).
+Doesn’t block retrieval recall, since retrieval has already run.
+Cons:
+Adds an extra step (slight latency increase).
+Still requires careful prompting or evaluation logic to detect ambiguity reliably.
+This is much safer and usually improves robustness.
+3. Hybrid option
+You can still have a lightweight intent layer before retrieval:
+Not to rephrase the query too much, but only to detect “query class” (e.g., “is this a metrics query? is this a glossary term definition request?”).
+Then retrieval runs normally.
+Post-retrieval agent handles ambiguity/conflicts.
+This balances performance and safety.
+✅ Best practice:
+Keep pre-retrieval intent minimal (classification, maybe synonym expansion from glossary).
+Do most clarification after retrieval, where you have actual evidence.
